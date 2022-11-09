@@ -7,4 +7,29 @@ class FriendsController < ApplicationController
   def show
     @friends =Friend.find(params[:id])
   end
+
+  # GET /friends/new
+  def new
+    @friend = Friend.new
+  end
+
+  # GET /friends/1/edit
+  def edit
+  end
+
+  # POST /friends or /friends.json
+  def create
+    @friend = Friend.new(friend_params)
+
+    respond_to do |format|
+      if @friend.save
+        format.html { redirect_to friend_url(@friend), notice: "Friend was successfully created." }
+        format.json { render :show, status: :created, location: @friend }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @friend.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 end
